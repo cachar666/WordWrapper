@@ -41,6 +41,10 @@ public class TestWordWrapper
         if (text.Length <= column)
             return text;
 
-        return string.Empty;
+        // Caso nuevo: texto más largo que la columna (por ahora sin espacios)
+        var primeraParte = text.Substring(0, column);
+        var resto = text.Substring(column);
+
+        return primeraParte + "\n" + resto;
     }
 }
