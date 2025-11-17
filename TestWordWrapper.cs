@@ -31,7 +31,7 @@ public class TestWordWrapper
         if (string.IsNullOrEmpty(text))
             return string.Empty;
 
-        if (text.Length < column)
+        if (text.Length <= column)
             return text;
 
         return string.Empty;
