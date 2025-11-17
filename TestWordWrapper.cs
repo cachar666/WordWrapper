@@ -11,6 +11,14 @@ public class TestWordWrapper
 
         resultado.Should().Be(string.Empty);
     }
+    
+    [Fact]
+    public void Cuando_Texto_Mide_Menos_Que_Columna_Deberia_Devolver_El_Mismo_Texto()
+    {
+        var resultado = Wrap("hola", 10);
+
+        resultado.Should().Be("hola");
+    }
 
     public string Wrap(string text, int column)
     {
