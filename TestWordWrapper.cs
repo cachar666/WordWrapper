@@ -19,7 +19,13 @@ public class TestWordWrapper
 
         resultado.Should().Be("hola");
     }
+    [Fact]
+    public void Cuando_Texto_Mide_Igual_Que_Columna_Deberia_Devolver_El_Mismo_Texto()
+    {
+        var resultado = Wrap("palabra", 7);
 
+        resultado.Should().Be("palabra");
+    }
     public string Wrap(string text, int column)
     {
         if (string.IsNullOrEmpty(text))
