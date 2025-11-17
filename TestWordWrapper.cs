@@ -33,6 +33,13 @@ public class TestWordWrapper
 
         resultado.Should().Be("pala\nbra");
     }
+    [Fact]
+    public void Cuando_No_Hay_Espacios_Y_Texto_Muy_Largo_Deberia_Cortar_En_Multiples_Lineas()
+    {
+        var resultado = Wrap("abcdefghij", 4);
+
+        resultado.Should().Be("abcd\nefgh\nij");
+    }
     public string Wrap(string text, int column)
     {
         if (string.IsNullOrEmpty(text))
@@ -41,10 +48,29 @@ public class TestWordWrapper
         if (text.Length <= column)
             return text;
 
-        // Caso nuevo: texto más largo que la columna (por ahora sin espacios)
-        var primeraParte = text.Substring(0, column);
-        var resto = text.Substring(column);
+        string resultado = "";
+        int inicio = 0;
 
-        return primeraParte + "\n" + resto;
+        while (inicio < text.Length)
+        {
+            int longitudRestante = text.Length - inicio;
+            int longitudLinea;
+
+            if (longitudRestante < column)
+                longitudLinea = longitudRestante;
+            else
+                longitudLinea = column;
+
+            string segmento = text.Substring(inicio, longitudLinea);
+
+            if (resultado.Length > 0)
+                resultado += "\n";
+
+            resultado += segmento;
+
+            inicio += longitudLinea;
+        }
+
+        return resultado;
     }
 }
