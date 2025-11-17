@@ -26,6 +26,13 @@ public class TestWordWrapper
 
         resultado.Should().Be("palabra");
     }
+    [Fact]
+    public void Cuando_No_Hay_Espacios_Y_Texto_Sobrepasa_Columna_Deberia_Cortar_En_Columna()
+    {
+        var resultado = Wrap("palabra", 4);
+
+        resultado.Should().Be("pala\nbra");
+    }
     public string Wrap(string text, int column)
     {
         if (string.IsNullOrEmpty(text))
