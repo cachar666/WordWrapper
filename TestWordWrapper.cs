@@ -40,6 +40,13 @@ public class TestWordWrapper
 
         resultado.Should().Be("abcd\nefgh\nij");
     }
+    [Fact]
+    public void Cuando_Hay_Espacio_Justo_En_Columna_Deberia_Cortar_En_Ese_Espacio()
+    {
+        var resultado = Wrap("hola mundo", 4);
+
+        resultado.Should().Be("hola\nmundo");
+    }
     public string Wrap(string text, int column)
     {
         if (string.IsNullOrEmpty(text))
