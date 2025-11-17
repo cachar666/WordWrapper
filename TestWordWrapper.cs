@@ -12,8 +12,8 @@ public class TestWordWrapper
         resultado.Should().Be(string.Empty);
     }
 
-    private object Wrap(string empty, int i)
+    public string Wrap(string text, int column)
     {
-        throw new NotImplementedException();
+        return string.Empty;
     }
 }
