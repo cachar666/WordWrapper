@@ -68,6 +68,94 @@ public class TestWordWrapper
 
         resultado.Should().Be("hola\na\ntodos");
     }
+    [Fact]
+    public void Cuando_No_Hay_Espacio_Antes_De_Columna_Deberia_Cortar_Por_Caracter_Aunque_Parta_Palabra()
+    {
+        // Arrange / Act
+        var resultado = Wrap("super", 1);
+
+        // Assert
+        resultado.Should().Be("s\nu\np\ne\nr");
+    }
+    [Fact]
+    public void Cuando_Hay_Multiples_Palabras_Deberia_Aplicar_La_Regla_En_Cada_Linea()
+    {
+        // Arrange / Act
+        var resultado = Wrap("nivel es lo maximo", 7);
+
+        // Assert
+        resultado.Should().Be("nivel\nes lo\nmaximo");
+    }
+    [Fact]
+    public void a()
+    {
+        var result = Wrap("", 1);
+
+        result.Should().Be("");
+    }
+    [Fact]
+    public void b()
+    {
+        var result = Wrap("this", 10);
+
+        result.Should().Be("this");
+    }   
+    
+    [Fact]
+    public void c()
+    {
+        var result = Wrap("word", 2);
+
+        result.Should().Be("wo\nrd");
+    } 
+    
+    [Fact]
+    public void d()
+    {
+        var result = Wrap("abcdefghij", 3);
+
+        result.Should().Be("abc\ndef\nghi\nj");
+    }
+    
+    [Fact]
+    public void e()
+    {
+        var result = Wrap("word word", 3);
+
+        result.Should().Be("wor\nd\nwor\nd");
+    }
+    
+    [Fact]
+    public void f()
+    {
+        var result = Wrap("word word", 6);
+
+        result.Should().Be("word\nword");
+    }    
+    
+    [Fact]
+    public void f2()
+    {
+        var result = Wrap("word word", 5);
+
+        result.Should().Be("word\nword");
+    }
+    
+    [Fact]
+    public void g()
+    {
+        var result = Wrap("word word word", 6);
+
+        result.Should().Be("word\nword\nword");
+    }
+    
+    [Fact]
+    public void h()
+    {
+        var result = Wrap("word word word", 11);
+
+        result.Should().Be("word word\nword");
+    }
     public string Wrap(string text, int column)
     {
         if (string.IsNullOrEmpty(text))
