@@ -47,6 +47,27 @@ public class TestWordWrapper
 
         resultado.Should().Be("hola\nmund\no");
     }
+    [Fact]
+    public void Cuando_Hay_Varios_Espacios_Antes_De_Columna_Deberia_Cortar_En_El_Ultimo_Espacio()
+    {
+        var resultado = Wrap("a un nivel es lo maximo", 7);
+
+        resultado.Should().Be("a un\nnivel\nes lo\nmaximo");
+    }
+    [Fact]
+    public void Cuando_Existe_Espacio_Justo_En_Columna_Y_El_Resto_Debe_Seguir_Envolviendo()
+    {
+        var resultado = Wrap("hola a todos en el sistema", 5);
+
+        resultado.Should().Be("hola\na\ntodos\nen el\nsiste\nma");
+    }
+    [Fact]
+    public void Cuando_Existe_Espacio_Justo_En_Columna_Deberia_Eliminar_Ese_Espacio_Y_Seguir()
+    {
+        var resultado = Wrap("hola a todos", 5);
+
+        resultado.Should().Be("hola\na\ntodos");
+    }
     public string Wrap(string text, int column)
     {
         if (string.IsNullOrEmpty(text))
