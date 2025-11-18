@@ -45,7 +45,7 @@ public class TestWordWrapper
     {
         var resultado = Wrap("hola mundo", 4);
 
-        resultado.Should().Be("hola\nmundo");
+        resultado.Should().Be("hola\nmund\no");
     }
     public string Wrap(string text, int column)
     {
@@ -61,21 +61,51 @@ public class TestWordWrapper
         while (inicio < text.Length)
         {
             int longitudRestante = text.Length - inicio;
-            int longitudLinea;
 
-            if (longitudRestante < column)
-                longitudLinea = longitudRestante;
+            // Si lo que queda cabe en una sola línea, lo devolvemos y salimos
+            if (longitudRestante <= column)
+            {
+                string segmentoFinal = text.Substring(inicio, longitudRestante);
+
+                if (resultado.Length > 0)
+                    resultado += "\n";
+
+                resultado += segmentoFinal;
+                break;
+            }
+
+            // Buscar el ÚLTIMO espacio dentro de la ventana [inicio .. inicio + column]
+            int posUltimoEspacio = -1;
+            int pos = text.IndexOf(' ', inicio);
+
+            while (pos != -1 && (pos - inicio) <= column)
+            {
+                posUltimoEspacio = pos;
+                pos = text.IndexOf(' ', pos + 1);
+            }
+
+            string segmento;
+
+            if (posUltimoEspacio != -1)
+            {
+                // Cortamos en el último espacio antes o justo en la columna
+                int longitudLinea = posUltimoEspacio - inicio; // sin incluir el espacio
+
+                segmento = text.Substring(inicio, longitudLinea);
+                inicio = posUltimoEspacio + 1; // saltamos el espacio
+            }
             else
-                longitudLinea = column;
-
-            string segmento = text.Substring(inicio, longitudLinea);
+            {
+                // No hay espacio dentro de la ventana: cortamos por carácter en la columna
+                int longitudLinea = column;
+                segmento = text.Substring(inicio, longitudLinea);
+                inicio += longitudLinea;
+            }
 
             if (resultado.Length > 0)
                 resultado += "\n";
 
             resultado += segmento;
-
-            inicio += longitudLinea;
         }
 
         return resultado;
